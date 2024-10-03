@@ -17,8 +17,8 @@ import com.backend.taskmanage.service.TodoService;
 
 
 @RestController
-@CrossOrigin(origins = "*", allowCredentials = "true")
 
+@CrossOrigin(origins = "https://taskmanagementapp-five.vercel.app", allowCredentials = "true")
 public class TodoController {
 	@Autowired
 	private TodoService todoService;
