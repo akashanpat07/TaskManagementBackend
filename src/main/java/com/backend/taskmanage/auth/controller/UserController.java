@@ -14,7 +14,7 @@ import com.backend.taskmanage.auth.service.UserService;
 
 
 @RestController
-@CrossOrigin(origins = "*", allowCredentials = "true")
+@CrossOrigin(origins = "https://taskmanagementapp-five.vercel.app", allowCredentials = "true")
 
 public class UserController {	
 	@Autowired
