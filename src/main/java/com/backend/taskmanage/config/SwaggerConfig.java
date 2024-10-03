@@ -4,16 +4,14 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.servers.Server;
+import io.swagger.v3.oas.models.media.Schema;
 import org.springdoc.core.customizers.OperationCustomizer;
-import org.springdoc.core.customizers.ParameterCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
 
 @Configuration
-@EnableWebMvc
 public class SwaggerConfig {
 
     @Bean
@@ -23,7 +21,7 @@ public class SwaggerConfig {
                 .title("Task Management API")
                 .version("1.0")
                 .description("API for managing tasks"))
-            .addServersItem(new Server().url("http://localhost:8080")); // Add your server URL here
+            .addServersItem(new Server().url("http://localhost:8080")); // Update to your server URL
     }
 
     @Bean
@@ -34,7 +32,7 @@ public class SwaggerConfig {
                 .description("Bearer <token>")
                 .required(false)
                 .in("header")
-                .schema(new io.swagger.v3.oas.models.schemas.Schema().type("string")));
+                .schema(new Schema().type("string")));
             return operation;
         };
     }
