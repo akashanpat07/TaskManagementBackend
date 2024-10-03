@@ -33,13 +33,13 @@ public class UserController {
 	UserService userService;
     
 	@ResponseStatus(code = HttpStatus.OK)
-	@PostMapping("/signin")
+	@PostMapping("/api/auth/signin")
     public ResponseEntity<UserSigninResponse> signin(@Valid @RequestBody UserSigninRequest userSigninRequest) {
 		return new ResponseEntity<>(userService.signin(userSigninRequest), HttpStatus.OK);
     }
 	
 	@ResponseStatus(code = HttpStatus.OK)
-	@PostMapping("/signup")
+	@PostMapping("/api/auth/signup")
     public ResponseEntity<UserSignupResponse> signup(@Valid @RequestBody UserSignupRequest userSignupRequest) {
 		return new ResponseEntity<>(userService.signup(userSignupRequest), HttpStatus.OK);
     }
