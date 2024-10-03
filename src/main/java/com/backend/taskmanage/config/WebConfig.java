@@ -11,9 +11,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("https://taskmanagementapp-five.vercel.app") 
-        .addAllowedOriginPattern("https://*.vercel.app"); // To cover all Vercel subdomains
-        .addAllowedOriginPattern("https://*.railway.app"); 
-            // Your frontend URL
+        
+            
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowCredentials(true);
     }
