@@ -1,45 +1,41 @@
 package com.backend.taskmanage.config;
 
-import java.security.Principal;
-import java.util.Collections;
-import java.util.List;
-
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.parameters.Parameter;
+import io.swagger.v3.oas.models.servers.Server;
+import org.springdoc.core.customizers.OperationCustomizer;
+import org.springdoc.core.customizers.ParameterCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import springfox.documentation.builders.ParameterBuilder;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.schema.ModelRef;
-import springfox.documentation.service.Parameter;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import java.util.List;
 
 @Configuration
-@EnableSwagger2
+@EnableWebMvc
 public class SwaggerConfig {
-	
-	@Bean
-	public Docket todoApi() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.forCodeGeneration(true)
-				.ignoredParameterTypes(Principal.class)
-		        .globalOperationParameters(globalParameterList()) 
-				.select()
-                .apis(RequestHandlerSelectors.basePackage("com.backend.todolist"))
-                .build();
-	}
-	
-	private List<Parameter> globalParameterList() {
-	    Parameter authTokenHeader =
-	        new ParameterBuilder()
-	            .name("Authorization") // name of the header
-	            .modelRef(new ModelRef("string"))
-	            .required(false)
-	            .parameterType("header")
-	            .description("Bearer <token>")
-	            .build();
 
-	    return Collections.singletonList(authTokenHeader);
-	  }
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+            .info(new Info()
+                .title("Task Management API")
+                .version("1.0")
+                .description("API for managing tasks"))
+            .addServersItem(new Server().url("http://localhost:8080")); // Add your server URL here
+    }
+
+    @Bean
+    public OperationCustomizer globalHeaderCustomizer() {
+        return (operation, handlerMethod) -> {
+            operation.addParametersItem(new Parameter()
+                .name("Authorization")
+                .description("Bearer <token>")
+                .required(false)
+                .in("header")
+                .schema(new io.swagger.v3.oas.models.schemas.Schema().type("string")));
+            return operation;
+        };
+    }
 }
